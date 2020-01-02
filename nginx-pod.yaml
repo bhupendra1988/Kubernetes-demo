@@ -2,10 +2,11 @@
 #"kubectl create -f nginx-pod.yaml" to create pod.
 #"kubectl get pod" to list pods
 #"kubectl get pod -o wide" to list pods with wide details.
-#"kubectl get pod nginx -o wide" to list specific pod with details.
+#"kubectl get pod nginx-pod -o wide" to list specific pod with details.
 #"kubectl get pod -l app=nginx"  to list pod with label tag.
-#"kubectl describe pod nginx" to describe specific pod.
-#"kubectl exec -it nginx -- /bin/sh" to run command into container.
+#"kubectl describe pod nginx-pod" to describe specific pod.
+#"kubectl exec -it nginx-pod -- /bin/sh" to run command into container.
+#"kubectl delete pod nginx-pod" delete pod.
 #"kubectl delete -f nginx-pod.yaml" to delete pod.
 apiVersion: v1
 kind: Pod
