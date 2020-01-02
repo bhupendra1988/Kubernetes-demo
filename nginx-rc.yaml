@@ -1,0 +1,43 @@
+#nginx-rc.yaml
+#"kubectl create -f nginx-rc.yaml" to create replication controller.
+#"kubectl get pod" to list pods
+#"kubectl get pod -o wide" to list pods with wide details.
+#"kubectl get pod <pod-name> -o wide" to list specific pod with details.
+#"kubectl get pod -l app=nginx-app"  to list pod with label tag.
+#"kubectl describe pod <pod-name>" to describe specific pod.
+#"kubectl describe rc nginx-rc" to describe replication controller(rc).
+#"kubectl exec -it <pod-name> -- /bin/sh" to run command into container.
+#"kubectl delete pod <pod-name>" delete pod.
+#"kubectl delete -f nginx-rc.yaml" to delete replication controller.
+#"kubectl get rc"  check replication controller status...
+#############################################
+##Scaling up
+#"kubectl scale rc nginx-rc --replicas=5"
+#"kubectl get rc nginx-rc"
+#"kubectl get po -o wide"
+##Scaling down
+#"kubectl scale rc nginx-rc replicas=3"
+#"kubectl get rc nginx-rc"
+#"kubectl get po -o wide"
+#############################################
+#nginx-rc.yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx-rc
+spec:
+  replicas: 3
+  selector:
+    app: nginx-app
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80
+    
