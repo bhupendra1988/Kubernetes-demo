@@ -1,0 +1,13 @@
+#tomcat-pod.yaml
+#Create tomcat pod by running command "kubectl create -f tomcat-pod.yaml"
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tomcat
+  labels:
+    app: tomcat
+    tier: dev
+spec:
+  containers:
+  - name: tomcat-container
+    image: tomcat:8.0
