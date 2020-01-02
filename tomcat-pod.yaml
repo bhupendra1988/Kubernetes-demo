@@ -1,5 +1,12 @@
 #tomcat-pod.yaml
-#Create tomcat pod by running command "kubectl create -f tomcat-pod.yaml"
+#"kubectl create -f tomcat-pod.yaml" to create pod.
+#"kubectl get pod" to list pods
+#"kubectl get pod -o wide" to list pods with wide details.
+#"kubectl get pod tomcat -o wide" to list specific pod with details.
+#"kubectl get pod -l app=tomcat"  to list pod with label tag.
+#"kubectl describe pod tomcat" to describe specific pod.
+#"kubectl exec -it tomcat -- /bin/sh" to run command into container.
+#"kubectl delete -f tomcat-pod.yaml" to delete pod.
 apiVersion: v1
 kind: Pod
 metadata:
