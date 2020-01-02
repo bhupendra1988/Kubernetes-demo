@@ -1,0 +1,42 @@
+#Replicaset Manifest file...
+#"kubectl create -f nginx-rs.yaml"
+#"kubectl get pods"
+#"kubectl get po -l tier=frontend"
+#"kubectl get rs nginx-rs -o wide"
+#"kubectl describe rs nginx-rs"
+##Scaling up
+#"kubectl scale rs nginx-rs --replicas=5"
+#"kubectl get rs nginx-rs"
+#"kubectl get po -o wide"
+##Scaling down
+#"kubectl scale rs nginx-rs --replicas=1"
+#"kubectl get rs nginx-rs"
+#"kubectl get po -o wide"
+##Delete
+#"kubectl delete -f nginx-rs.yaml"
+#"kubectl get po -l app=nginx-app"
+##############################################
+#nginx-rs.yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-app
+    matchExpressions:
+      - { key: tier, operator: in, values: [frontend] }
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+        tier: frontend
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80
