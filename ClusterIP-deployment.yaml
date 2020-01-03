@@ -19,16 +19,16 @@ spec:
         app: redis
         role: master
         tier: backend
-  spec:
-    containers:
-    - name: master
-      image: k8s.gcr.io/redis:e2e
-      resources:
-        requests:
-          cpu: 100m
-          memory: 100Mi
-      ports:
-      - containerPort: 6379
+    spec:
+      containers:
+      - name: master
+        image: k8s.gcr.io/redis:e2e
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
 ---
 ######################################
 #Deploying 3 Redis DB Slaves
@@ -52,16 +52,16 @@ spec:
         app: redis
         role: slave
         tier: backend
-  spec:
-    containers:
-    - name: slave
-      image: gcr.io/google_samples/gb-redisslave:v1
-      resources:
-        requests:
-          cpu: 100m
-          memory: 100Mi
-      ports:
-      - containerPort: 6379
+    spec:
+      containers:
+      - name: slave
+        image: gcr.io/google_samples/gb-redisslave:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
 ---
 ##############################
 #Deploying 2 front-end php web pods
@@ -72,24 +72,24 @@ metadata:
   labels:
     app: guestbook
 spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: guestbook
-      tier: frontend
-  template:
-    metadata:
-      labels:
-        app: guestbook
-        role: frontend
-    spec:
-      containers:
-      - name: php-redis
-        image: gcr.io/google-samples/gb-frontend:v4
-        resources:
-          requests:
-            cpu: 100m
-            memory: 100Mi
-        ports:
-        - containerPort: 80
+   replicas: 2
+   selector:
+     matchLabels:
+       app: guestbook
+       tier: frontend
+   template:
+     metadata:
+       labels:
+         app: guestbook
+         tier: frontend
+     spec:
+       containers:
+       - name: php-redis
+         image: gcr.io/google-samples/gb-frontend:v4
+         resources:
+           requests:
+             cpu: 100m
+             memory: 100Mi
+         ports:
+         - containerPort: 80
 ---
