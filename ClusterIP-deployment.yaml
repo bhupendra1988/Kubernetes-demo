@@ -1,0 +1,90 @@
+##Deploying 1 Redis DB Master.
+#Redis-master-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+  spec:
+    containers:
+    - name: master
+      image: k8s.gcr.io/redis:e2e
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      ports:
+      - containerPort: 6379
+---
+######################################
+#Deploying 3 Redis DB Slaves
+#redis-slave.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+  spec:
+    containers:
+    - name: slave
+      image: gcr.io/google_samples/gb-redisslave:v1
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      ports:
+      - containerPort: 6379
+---
+##############################
+#Deploying 2 front-end php web pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: guestbook
+      tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google-samples/gb-frontend:v4
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
+---
