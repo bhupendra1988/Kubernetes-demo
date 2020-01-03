@@ -1,0 +1,42 @@
+##Deployment types are 1. Recreate 2. RollingUpdate(default) 3. Canary 4. Blue-Green
+#"kubectl create -f nginx-deploy.yaml"
+#"kubectl get deploy -l app=nginx-app"
+#"kubectl get rs -l app=nginx-app"
+#"kubectl get po -l app=nginx-app"
+#"kubectl describe deploy nginx-deployment"
+####Update
+#"kubectl set image deploy nginx-deployment nginx-container=nginx:1.9.1" (update nginx 1.7.9 to 1.9.1)
+#"kubectl edit deploy nginx-deployment"  (change nginx version)
+#"kubectl rollout status deployment/nginx-deployment"
+#"kubectl get deploy" (list all the diployment on master node)
+####Rollback
+#nginx:1.7.9 -> nginx:1.91 (correct 1.9.1)
+#"kubectl set image deploy nginx-deployment nginx-container=nginx:1.91 --record"
+#"kubectl rollout status deployment/nginx-deployment" (check the status)
+#"kubectl rollout history deployment/nginx-deployment" (print command history)
+#"kubectl rollout undo deployment/nginx-deployment" (undo the deployment)
+#"kubectl rollout status deployment/nginx-deployment" (check the status)
+#######################################
+#Deployment
+#controllers/nginx-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app:nginx-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-app
+  template:
+    metadata:
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
