@@ -1,0 +1,58 @@
+#Creating service for redis master
+#redis-master-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master-svc
+  labels:
+    app: redis
+    role: master
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  type: ClusterIP
+  selector:
+    app: redis
+    role: master
+    tier: backend
+---
+#########################
+#Creating service for redis DB slave
+#redis-slave-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave-svc
+  labels:
+    app: redis
+    role: slave
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+  type: ClusterIP
+  selector:
+    app: redis
+    role: master
+    tier: backend
+---
+###################################
+#Creating service for frontend apps
+#frontend-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+  labels:
+    app: guestbook
+    tier: frontend
+spec:
+  ports:
+  - port: 80
+  type: LoadBalancer
+  selector:
+    app: guestbook
+    tier: frontend
+---
