@@ -1,0 +1,25 @@
+#"kubectl create -f nginx-deploy.yaml" (create deployment first)
+#"kubectl create -f nginx-service-lb.yaml"
+#"kubectl get service -l app=nginx-app"
+#"kubectl describe service my-service"
+#"kubectl describe service my-service | grep Load"
+#####Deleting service
+#"kubectl delete service my-service"
+#"kubectl get pods"
+#################################
+#service-LoadBalancer
+#nginx-service-lb.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app: nginx-app
+spec:
+  selector:
+    app: nginx-app
+  type: LoadBalancer
+  ports:
+  - nodePort: 31000
+    port: 80
+    targetPort: 80
