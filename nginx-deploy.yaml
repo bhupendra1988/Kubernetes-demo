@@ -16,6 +16,18 @@
 #"kubectl rollout history deployment/nginx-deployment" (print command history)
 #"kubectl rollout undo deployment/nginx-deployment" (undo the deployment)
 #"kubectl rollout status deployment/nginx-deployment" (check the status)
+#####Scale UP
+#"kubectl scale deployment nginx-deployment --replicas=5"
+#"kubectl get deploy"
+#"kubectl get po"
+#####Scale Down
+#"kubectl scale deployment nginx-deployment --replicas=1"
+#"kubectl get deploy"
+#"kubectl get po -l app=nginx-app"
+######Delete
+#"kubectl delete -f nginx-deploy.yaml"
+#"kubectl get po -l app=nginx-app"
+
 #######################################
 #Deployment
 #controllers/nginx-deploy.yaml
