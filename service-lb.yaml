@@ -1,5 +1,5 @@
 #service-lb.yaml
-apiVersion: app/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
