@@ -1,0 +1,31 @@
+#NodePort manifest file.
+#Services is a way of grouping of pods that are running on the cluster. services provide important features such as loadbalancing, service discovery between Apps and features to support zero downtime app deployment.
+#Services types 1. ClusterIP(default) 2. NodePort 3. LoadBalancer 4. ExternalName
+#########################################
+#"kubectl create -f nginx-deploy.yaml" (create deployment first then create service to expose connection outside of cluster)
+#"kubectl create -f nginx-svc-np.yaml"
+#"kubectl get service -l app=nginx-app" (get service ip)
+#"kubectl get po -o wide" (get pod ip)
+#"kubectl describe svc my-service"
+#"gcloud compute instances list" (show node ip)
+########Delete
+#"kubectl delete svc my-service"
+#"kubectl get pods"
+#############################################################
+#Service
+#nginx-svc-np.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  labels:
+    app: nginx-app
+spec:
+  selector:
+    app: nginx-app
+  type: NodePort
+  ports:
+  - nodePort: 31000
+    port: 80
+    targetPort: 80
+
